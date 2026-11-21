@@ -1,0 +1,168 @@
+[
+  {
+    "n": 1,
+    "question": "According to my notes, what chunk size is a common starting point for RAG?",
+    "expected_tool": "search_notes",
+    "tools_used": [
+      "search_notes"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "According to your notes (`rag.md`), **300-500 tokens** is a common starting point for RAG chunk size."
+  },
+  {
+    "n": 2,
+    "question": "What chunk overlap percentage do my notes recommend for RAG?",
+    "expected_tool": "search_notes",
+    "tools_used": [
+      "search_notes"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "Your notes recommend a chunk overlap of about **10–15%** for RAG to prevent sentences from being cut in half."
+  },
+  {
+    "n": 3,
+    "question": "In my SQL notes, how is HAVING different from WHERE?",
+    "expected_tool": "search_notes",
+    "tools_used": [
+      "search_notes"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "In your SQL notes, **WHERE** filters rows *before* grouping, while **HAVING** filters groups *after* grouping."
+  },
+  {
+    "n": 4,
+    "question": "How many usable host addresses does a /24 subnet have, according to my networking notes?",
+    "expected_tool": "search_notes",
+    "tools_used": [
+      "search_notes"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "According to your networking notes, a /24 subnet has **254** usable host addresses (out of 256 total addresses)."
+  },
+  {
+    "n": 5,
+    "question": "Which tool does my VAPT checklist mention for manual testing?",
+    "expected_tool": "search_notes",
+    "tools_used": [
+      "search_notes"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "Your VAPT checklist mentions **Burp Suite** for manual testing (in Step 4)."
+  },
+  {
+    "n": 6,
+    "question": "What do my git notes say a .gitignore file is for?",
+    "expected_tool": "search_notes",
+    "tools_used": [
+      "search_notes"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "Your git notes state that a `.gitignore` file lists files that Git must never track, such as `.env`."
+  },
+  {
+    "n": 7,
+    "question": "What do my Python tips say about handling API keys?",
+    "expected_tool": "search_notes",
+    "tools_used": [
+      "search_notes"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "Your Python tips advise **never hardcoding API keys**. Instead, you should keep them in a `.env` file and load them using `python-dotenv`."
+  },
+  {
+    "n": 8,
+    "question": "At which layer does a switch work, according to my networking notes?",
+    "expected_tool": "search_notes",
+    "tools_used": [
+      "search_notes"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "According to your networking notes, a switch works at **layer 2**."
+  },
+  {
+    "n": 9,
+    "question": "What does the README of psf/requests say Requests is?",
+    "expected_tool": "read_github_file",
+    "tools_used": [
+      "read_github_file"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "The README states that Requests is:\n\n> **Requests** is a simple, yet elegant, HTTP library."
+  },
+  {
+    "n": 10,
+    "question": "Summarise the README of pallets/flask.",
+    "expected_tool": "read_github_file",
+    "tools_used": [
+      "read_github_file",
+      "read_github_file"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "**Flask** is a lightweight, popular WSGI-based Python web application framework built on top of [Werkzeug] and [Jinja]. \n\nKey points from the README:\n* **Design Philosophy:** It is designed for quick and easy startup while being capable of scaling to complex applications. It is unopinionated, meaning it doesn't enforce project layout or specific dependencies, giving developers the freedom to choose their own tools.\n* **Extensions:** A large ecosystem of community-provided extensions makes adding new functionality straightforward.\n* **Simple Example:** A basic \"Hello, World!\" app takes just a few lines of code and can be run instantly using the `flask run` command.\n* **Community & Support:** It is developed and maintained by the Pallets organization, which welcomes donations and contributions (via bug reports, feature requests, and pull requests)."
+  },
+  {
+    "n": 11,
+    "question": "What is FastAPI, according to the README of tiangolo/fastapi?",
+    "expected_tool": "read_github_file",
+    "tools_used": [
+      "read_github_file"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "According to its README, FastAPI is a **modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.** \n\nKey features highlighted in the README include:\n* **Fast:** High performance, on par with NodeJS and Go (via Starlette and Pydantic).\n* **Fast to code & Fewer bugs:** Increases development speed significantly while reducing human-induced errors.\n* **Intuitive & Easy:** Provides great editor support/autocompletion and is designed to be easy to learn.\n* **Robust & Standards-based:** Production-ready with automatic interactive documentation, based on OpenAPI and JSON Schema standards."
+  },
+  {
+    "n": 12,
+    "question": "Which book does the rasbt/LLMs-from-scratch repo accompany? Give the title.",
+    "expected_tool": "read_github_file",
+    "tools_used": [
+      "read_github_file"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "The `rasbt/LLMs-from-scratch` repository accompanies the book ***Build a Large Language Model (From Scratch)*** by Sebastian Raschka."
+  },
+  {
+    "n": 13,
+    "question": "What is the OWASP/CheatSheetSeries repo about, based on its README?",
+    "expected_tool": "read_github_file",
+    "tools_used": [
+      "read_github_file"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "Based on its README, the **OWASP Cheat Sheet Series** repo is an official OWASP flagship project that provides a collection of concise, practical guides (\"cheat sheets\") focused on application security best practices for developers and builders. \n\nWhile the markdown files serve as the working sources in the repository, the complete and formatted cheat sheets are published on the official [OWASP Cheat Sheet Series website](https://cheatsheetseries.owasp.org)."
+  },
+  {
+    "n": 14,
+    "question": "According to the README of sqlmapproject/sqlmap, what does sqlmap automate?",
+    "expected_tool": "read_github_file",
+    "tools_used": [
+      "read_github_file"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "According to the README, sqlmap automates the process of:\n\n1. Detecting SQL injection flaws\n2. Exploiting SQL injection flaws\n3. Taking over database servers"
+  },
+  {
+    "n": 15,
+    "question": "Read the LICENSE file of psf/requests and tell me which license it uses.",
+    "expected_tool": "read_github_file",
+    "tools_used": [
+      "read_github_file"
+    ],
+    "right_tool": true,
+    "right_answer_auto": true,
+    "answer": "The `psf/requests` repository uses the **Apache License, Version 2.0**."
+  }
+]

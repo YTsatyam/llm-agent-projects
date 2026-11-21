@@ -1,0 +1,15 @@
+{"question": "According to my notes, what chunk size is a common starting point for RAG?", "expected_tool": "search_notes", "answer_contains": ["300"]}
+{"question": "What chunk overlap percentage do my notes recommend for RAG?", "expected_tool": "search_notes", "answer_contains": ["10"]}
+{"question": "In my SQL notes, how is HAVING different from WHERE?", "expected_tool": "search_notes", "answer_contains": ["group"]}
+{"question": "How many usable host addresses does a /24 subnet have, according to my networking notes?", "expected_tool": "search_notes", "answer_contains": ["254"]}
+{"question": "Which tool does my VAPT checklist mention for manual testing?", "expected_tool": "search_notes", "answer_contains": ["Burp"]}
+{"question": "What do my git notes say a .gitignore file is for?", "expected_tool": "search_notes", "answer_contains": ["track"]}
+{"question": "What do my Python tips say about handling API keys?", "expected_tool": "search_notes", "answer_contains": [".env"]}
+{"question": "At which layer does a switch work, according to my networking notes?", "expected_tool": "search_notes", "answer_contains": ["layer 2"]}
+{"question": "What does the README of psf/requests say Requests is?", "expected_tool": "read_github_file", "answer_contains": ["HTTP"]}
+{"question": "Summarise the README of pallets/flask.", "expected_tool": "read_github_file", "answer_contains": ["WSGI"]}
+{"question": "What is FastAPI, according to the README of tiangolo/fastapi?", "expected_tool": "read_github_file", "answer_contains": ["framework"]}
+{"question": "Which book does the rasbt/LLMs-from-scratch repo accompany? Give the title.", "expected_tool": "read_github_file", "answer_contains": ["Build a Large Language Model"]}
+{"question": "What is the OWASP/CheatSheetSeries repo about, based on its README?", "expected_tool": "read_github_file", "answer_contains": ["cheat"]}
+{"question": "According to the README of sqlmapproject/sqlmap, what does sqlmap automate?", "expected_tool": "read_github_file", "answer_contains": ["SQL injection"]}
+{"question": "Read the LICENSE file of psf/requests and tell me which license it uses.", "expected_tool": "read_github_file", "answer_contains": ["Apache"]}
