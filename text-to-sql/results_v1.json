@@ -1,0 +1,247 @@
+{
+  "version": "v1",
+  "score": 30,
+  "total": 30,
+  "cases": [
+    {
+      "n": 1,
+      "question": "How many customers are there? Return a single number.",
+      "agent_sql": "SELECT COUNT(*) FROM customers LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM customers",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 2,
+      "question": "List the names of all genres. Return only the genre name.",
+      "agent_sql": "SELECT Name FROM genres LIMIT 100",
+      "gold_sql": "SELECT Name FROM genres",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 3,
+      "question": "How many tracks are there in total? Return a single number.",
+      "agent_sql": "SELECT COUNT(*) FROM tracks LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM tracks",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 4,
+      "question": "List the first name and last name of customers from Brazil.",
+      "agent_sql": "SELECT FirstName, LastName FROM customers WHERE Country = 'Brazil' LIMIT 100",
+      "gold_sql": "SELECT FirstName, LastName FROM customers WHERE Country = 'Brazil'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 5,
+      "question": "How many employees are there? Return a single number.",
+      "agent_sql": "SELECT COUNT(*) FROM employees LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM employees",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 6,
+      "question": "What is the longest track length in milliseconds? Return a single number.",
+      "agent_sql": "SELECT MAX(Milliseconds) FROM tracks LIMIT 100",
+      "gold_sql": "SELECT MAX(Milliseconds) FROM tracks",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 7,
+      "question": "Return the titles of the albums with ArtistId 1.",
+      "agent_sql": "SELECT Title FROM albums WHERE ArtistId = 1 LIMIT 100",
+      "gold_sql": "SELECT Title FROM albums WHERE ArtistId = 1",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 8,
+      "question": "How many invoices have a total greater than 10? Return a single number.",
+      "agent_sql": "SELECT COUNT(InvoiceId) FROM invoices WHERE Total > 10 LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM invoices WHERE Total > 10",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 9,
+      "question": "List the names of all media types. Return only the name.",
+      "agent_sql": "SELECT Name FROM media_types LIMIT 100",
+      "gold_sql": "SELECT Name FROM media_types",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 10,
+      "question": "List the distinct countries where customers live. Return only the country.",
+      "agent_sql": "SELECT DISTINCT Country FROM customers LIMIT 100",
+      "gold_sql": "SELECT DISTINCT Country FROM customers",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 11,
+      "question": "Which countries have more than 3 customers? Return the country and the number of customers.",
+      "agent_sql": "SELECT Country, COUNT(*) AS CustomerCount FROM customers GROUP BY Country HAVING COUNT(*) > 3 LIMIT 100",
+      "gold_sql": "SELECT Country, COUNT(*) FROM customers GROUP BY Country HAVING COUNT(*) > 3",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 12,
+      "question": "Return the titles of all albums by the artist named Iron Maiden. Return only the title.",
+      "agent_sql": "SELECT albums.Title FROM albums JOIN artists ON albums.ArtistId = artists.ArtistId WHERE artists.Name = 'Iron Maiden' LIMIT 100",
+      "gold_sql": "SELECT al.Title FROM albums al JOIN artists ar ON al.ArtistId = ar.ArtistId WHERE ar.Name = 'Iron Maiden'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 13,
+      "question": "How many tracks are in the genre Jazz? Return a single number.",
+      "agent_sql": "SELECT COUNT(*) FROM tracks AS T INNER JOIN genres AS G ON T.GenreId = G.GenreId WHERE G.Name = 'Jazz' LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM tracks t JOIN genres g ON t.GenreId = g.GenreId WHERE g.Name = 'Jazz'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 14,
+      "question": "For each media type, return the media type name and the number of tracks it has.",
+      "agent_sql": "SELECT m.Name, COUNT(t.TrackId) AS TrackCount FROM media_types AS m LEFT JOIN tracks AS t ON m.MediaTypeId = t.MediaTypeId GROUP BY m.MediaTypeId, m.Name LIMIT 100",
+      "gold_sql": "SELECT m.Name, COUNT(*) FROM media_types m JOIN tracks t ON t.MediaTypeId = m.MediaTypeId GROUP BY m.MediaTypeId, m.Name",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 15,
+      "question": "Return the first name, last name and email of the customers supported by the employee Jane Peacock.",
+      "agent_sql": "SELECT c.FirstName, c.LastName, c.Email FROM customers AS c JOIN employees AS e ON c.SupportRepId = e.EmployeeId WHERE e.FirstName = 'Jane' AND e.LastName = 'Peacock' LIMIT 100",
+      "gold_sql": "SELECT c.FirstName, c.LastName, c.Email FROM customers c JOIN employees e ON c.SupportRepId = e.EmployeeId WHERE e.FirstName = 'Jane' AND e.LastName = 'Peacock'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 16,
+      "question": "What is the total amount of all invoices of customers from Germany, rounded to 2 decimals? Return a single number.",
+      "agent_sql": "SELECT ROUND(SUM(invoices.Total), 2) FROM invoices JOIN customers ON invoices.CustomerId = customers.CustomerId WHERE customers.Country = 'Germany' LIMIT 100",
+      "gold_sql": "SELECT ROUND(SUM(i.Total), 2) FROM invoices i JOIN customers c ON i.CustomerId = c.CustomerId WHERE c.Country = 'Germany'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 17,
+      "question": "List the names of the tracks on the album titled Let There Be Rock. Return only the track name.",
+      "agent_sql": "SELECT tracks.Name FROM tracks JOIN albums ON tracks.AlbumId = albums.AlbumId WHERE albums.Title = 'Let There Be Rock' LIMIT 100",
+      "gold_sql": "SELECT t.Name FROM tracks t JOIN albums a ON t.AlbumId = a.AlbumId WHERE a.Title = 'Let There Be Rock'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 18,
+      "question": "How many invoices did each customer from Brazil have? Return first name, last name and the invoice count.",
+      "agent_sql": "SELECT c.FirstName, c.LastName, COUNT(i.InvoiceId) AS InvoiceCount FROM customers AS c JOIN invoices AS i ON c.CustomerId = i.CustomerId WHERE c.Country = 'Brazil' GROUP BY c.CustomerId, c.FirstName, c.LastName LIMIT 100",
+      "gold_sql": "SELECT c.FirstName, c.LastName, COUNT(*) FROM customers c JOIN invoices i ON i.CustomerId = c.CustomerId WHERE c.Country = 'Brazil' GROUP BY c.CustomerId, c.FirstName, c.LastName",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 19,
+      "question": "How many tracks are in the playlist named Grunge? Return a single number.",
+      "agent_sql": "SELECT COUNT(*) FROM playlist_track AS pt JOIN playlists AS p ON pt.PlaylistId = p.PlaylistId WHERE p.Name = 'Grunge' LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM playlists p JOIN playlist_track pt ON p.PlaylistId = pt.PlaylistId WHERE p.Name = 'Grunge'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 20,
+      "question": "For every employee who has a manager, return the employee's first name, last name, then the manager's first name and last name.",
+      "agent_sql": "SELECT e.FirstName AS EmployeeFirstName, e.LastName AS EmployeeLastName, m.FirstName AS ManagerFirstName, m.LastName AS ManagerLastName FROM employees AS e JOIN employees AS m ON e.ReportsTo = m.EmployeeId LIMIT 100",
+      "gold_sql": "SELECT e.FirstName, e.LastName, m.FirstName, m.LastName FROM employees e JOIN employees m ON e.ReportsTo = m.EmployeeId",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 21,
+      "question": "Which country's customers spent the most in total? Return the country and the total spent, rounded to 2 decimals.",
+      "agent_sql": "SELECT c.Country, ROUND(SUM(i.Total), 2) AS TotalSpent FROM customers AS c JOIN invoices AS i ON c.CustomerId = i.CustomerId GROUP BY c.Country ORDER BY TotalSpent DESC LIMIT 1",
+      "gold_sql": "SELECT c.Country, ROUND(SUM(i.Total), 2) FROM customers c JOIN invoices i ON i.CustomerId = c.CustomerId GROUP BY c.Country ORDER BY SUM(i.Total) DESC LIMIT 1",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 22,
+      "question": "Which single customer spent the most in total? Return first name, last name and total spent, rounded to 2 decimals.",
+      "agent_sql": "SELECT c.FirstName, c.LastName, ROUND(SUM(i.Total), 2) AS TotalSpent FROM customers AS c JOIN invoices AS i ON c.CustomerId = i.CustomerId GROUP BY c.CustomerId ORDER BY TotalSpent DESC LIMIT 1",
+      "gold_sql": "SELECT c.FirstName, c.LastName, ROUND(SUM(i.Total), 2) FROM customers c JOIN invoices i ON i.CustomerId = c.CustomerId GROUP BY c.CustomerId, c.FirstName, c.LastName ORDER BY SUM(i.Total) DESC LIMIT 1",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 23,
+      "question": "How many invoices were issued in the year 2011? Return a single number.",
+      "agent_sql": "SELECT COUNT(InvoiceId) FROM invoices WHERE InvoiceDate LIKE '2011%' LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM invoices WHERE strftime('%Y', InvoiceDate) = '2011'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 24,
+      "question": "Which 3 artists have the most albums? Return the artist name and the number of albums.",
+      "agent_sql": "SELECT artists.Name, COUNT(albums.AlbumId) AS AlbumCount FROM artists JOIN albums ON artists.ArtistId = albums.ArtistId GROUP BY artists.ArtistId, artists.Name ORDER BY AlbumCount DESC LIMIT 3",
+      "gold_sql": "SELECT ar.Name, COUNT(*) FROM artists ar JOIN albums al ON al.ArtistId = ar.ArtistId GROUP BY ar.ArtistId, ar.Name ORDER BY COUNT(*) DESC LIMIT 3",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 25,
+      "question": "Which genre has the most tracks? Return the genre name and the number of tracks.",
+      "agent_sql": "SELECT g.Name, COUNT(t.TrackId) AS TrackCount FROM genres AS g JOIN tracks AS t ON g.GenreId = t.GenreId GROUP BY g.GenreId, g.Name ORDER BY TrackCount DESC LIMIT 1",
+      "gold_sql": "SELECT g.Name, COUNT(*) FROM genres g JOIN tracks t ON t.GenreId = g.GenreId GROUP BY g.GenreId, g.Name ORDER BY COUNT(*) DESC LIMIT 1",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 26,
+      "question": "How many distinct tracks have been sold at least once? Return a single number.",
+      "agent_sql": "SELECT COUNT(DISTINCT TrackId) FROM invoice_items LIMIT 100",
+      "gold_sql": "SELECT COUNT(DISTINCT TrackId) FROM invoice_items",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 27,
+      "question": "Which customers have spent more than the average total spent per customer? Return first name and last name.",
+      "agent_sql": "SELECT c.FirstName, c.LastName FROM customers AS c JOIN invoices AS i ON c.CustomerId = i.CustomerId GROUP BY c.CustomerId, c.FirstName, c.LastName HAVING SUM(i.Total) > (SELECT AVG(CustomerTotal) FROM (SELECT SUM(Total) AS CustomerTotal FROM invoices GROUP BY CustomerId)) LIMIT 100",
+      "gold_sql": "SELECT c.FirstName, c.LastName FROM customers c JOIN invoices i ON i.CustomerId = c.CustomerId GROUP BY c.CustomerId, c.FirstName, c.LastName HAVING SUM(i.Total) > (SELECT AVG(s) FROM (SELECT SUM(Total) AS s FROM invoices GROUP BY CustomerId))",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 28,
+      "question": "For each support employee, return their first name, last name and the total invoice amount of their customers, rounded to 2 decimals.",
+      "agent_sql": "SELECT e.FirstName, e.LastName, ROUND(SUM(i.Total), 2) AS TotalInvoiceAmount FROM employees AS e JOIN customers AS c ON e.EmployeeId = c.SupportRepId JOIN invoices AS i ON c.CustomerId = i.CustomerId GROUP BY e.EmployeeId, e.FirstName, e.LastName LIMIT 100",
+      "gold_sql": "SELECT e.FirstName, e.LastName, ROUND(SUM(i.Total), 2) FROM employees e JOIN customers c ON c.SupportRepId = e.EmployeeId JOIN invoices i ON i.CustomerId = c.CustomerId GROUP BY e.EmployeeId, e.FirstName, e.LastName",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 29,
+      "question": "How many customers have spent more than 40 in total? Return a single number.",
+      "agent_sql": "SELECT COUNT(*) FROM (SELECT CustomerId FROM invoices GROUP BY CustomerId HAVING SUM(Total) > 40) LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM (SELECT CustomerId FROM invoices GROUP BY CustomerId HAVING SUM(Total) > 40)",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 30,
+      "question": "For each billing country with at least 5 invoices, return the billing country and the average invoice total, rounded to 2 decimals.",
+      "agent_sql": "SELECT BillingCountry, ROUND(AVG(Total), 2) AS AverageTotal FROM invoices GROUP BY BillingCountry HAVING COUNT(InvoiceId) >= 5 LIMIT 100",
+      "gold_sql": "SELECT BillingCountry, ROUND(AVG(Total), 2) FROM invoices GROUP BY BillingCountry HAVING COUNT(*) >= 5",
+      "correct": true,
+      "status": "ok"
+    }
+  ]
+}
