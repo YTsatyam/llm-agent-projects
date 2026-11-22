@@ -1,8 +1,9 @@
 import json, sys, time
 from text2sql import ask_sql, run
 
-cases = [json.loads(l) for l in open("tests.jsonl", encoding="utf-8") if l.strip()]
 tag = sys.argv[1] if len(sys.argv) > 1 else "v1"
+test_file = sys.argv[2] if len(sys.argv) > 2 else "tests.jsonl"
+cases = [json.loads(l) for l in open(test_file, encoding="utf-8") if l.strip()]
 correct, log = 0, []
 
 for i, c in enumerate(cases, 1):

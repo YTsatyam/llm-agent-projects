@@ -1,0 +1,167 @@
+{
+  "version": "hard_v1",
+  "score": 19,
+  "total": 20,
+  "cases": [
+    {
+      "n": 1,
+      "question": "How many customers don't have a state recorded?",
+      "agent_sql": "SELECT COUNT(*) FROM customers WHERE State IS NULL LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM customers WHERE State IS NULL",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 2,
+      "question": "How many tracks have no composer listed?",
+      "agent_sql": "SELECT COUNT(*) FROM tracks WHERE Composer IS NULL LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM tracks WHERE Composer IS NULL",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 3,
+      "question": "How many tracks have never been sold?",
+      "agent_sql": "SELECT COUNT(*) FROM tracks WHERE NOT TrackId IN (SELECT DISTINCT TrackId FROM invoice_items) LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM tracks WHERE TrackId NOT IN (SELECT TrackId FROM invoice_items)",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 4,
+      "question": "How many artists have no albums?",
+      "agent_sql": "SELECT COUNT(*) FROM artists WHERE NOT ArtistId IN (SELECT ArtistId FROM albums) LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM artists WHERE ArtistId NOT IN (SELECT ArtistId FROM albums)",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 5,
+      "question": "How many invoices were issued in the first quarter of 2010?",
+      "agent_sql": "SELECT COUNT(*) FROM invoices WHERE InvoiceDate >= '2010-01-01' AND InvoiceDate < '2010-04-01' LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM invoices WHERE InvoiceDate >= '2010-01-01' AND InvoiceDate < '2010-04-01'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 6,
+      "question": "How many invoices were issued in December, across all years?",
+      "agent_sql": "SELECT COUNT(*) FROM invoices WHERE STRFTIME('%m', InvoiceDate) = '12' LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM invoices WHERE strftime('%m', InvoiceDate) = '12'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 7,
+      "question": "How many different customers have bought at least one Jazz track?",
+      "agent_sql": "SELECT COUNT(DISTINCT T1.CustomerId) FROM customers AS T1 JOIN invoices AS T2 ON T1.CustomerId = T2.CustomerId JOIN invoice_items AS T3 ON T2.InvoiceId = T3.InvoiceId JOIN tracks AS T4 ON T3.TrackId = T4.TrackId JOIN genres AS T5 ON T4.GenreId = T5.GenreId WHERE T5.Name = 'Jazz' LIMIT 100",
+      "gold_sql": "SELECT COUNT(DISTINCT i.CustomerId) FROM invoices i JOIN invoice_items ii ON ii.InvoiceId = i.InvoiceId JOIN tracks t ON t.TrackId = ii.TrackId JOIN genres g ON g.GenreId = t.GenreId WHERE g.Name = 'Jazz'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 8,
+      "question": "What is the average track length in minutes, rounded to 2 decimals?",
+      "agent_sql": "SELECT ROUND(AVG(Milliseconds) / 60000.0, 2) AS AverageLengthMinutes FROM tracks LIMIT 100",
+      "gold_sql": "SELECT ROUND(AVG(Milliseconds) / 60000.0, 2) FROM tracks",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 9,
+      "question": "How many albums have more than 20 tracks?",
+      "agent_sql": "SELECT COUNT(*) FROM (SELECT AlbumId FROM tracks GROUP BY AlbumId HAVING COUNT(*) > 20) LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM (SELECT AlbumId FROM tracks WHERE AlbumId IS NOT NULL GROUP BY AlbumId HAVING COUNT(*) > 20)",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 10,
+      "question": "Which employees have never been the support rep for any customer? Return their first and last names.",
+      "agent_sql": "SELECT FirstName, LastName FROM employees WHERE NOT EmployeeId IN (SELECT DISTINCT SupportRepId FROM customers WHERE NOT SupportRepId IS NULL) LIMIT 100",
+      "gold_sql": "SELECT FirstName, LastName FROM employees WHERE EmployeeId NOT IN (SELECT SupportRepId FROM customers WHERE SupportRepId IS NOT NULL)",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 11,
+      "question": "What percentage of invoices have a billing country of USA? Round to 2 decimals.",
+      "agent_sql": "SELECT ROUND((SUM(CASE WHEN BillingCountry = 'USA' THEN 1 ELSE 0 END) * 100.0) / COUNT(*), 2) AS Percentage FROM invoices LIMIT 100",
+      "gold_sql": "SELECT ROUND(100.0 * SUM(CASE WHEN BillingCountry = 'USA' THEN 1 ELSE 0 END) / COUNT(*), 2) FROM invoices",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 12,
+      "question": "Which 3 genres brought in the most revenue from track sales? Return the genre name and the revenue rounded to 2 decimals.",
+      "agent_sql": "SELECT g.Name, ROUND(SUM(ii.UnitPrice * ii.Quantity), 2) AS Revenue FROM genres AS g JOIN tracks AS t ON g.GenreId = t.GenreId JOIN invoice_items AS ii ON t.TrackId = ii.TrackId GROUP BY g.GenreId, g.Name ORDER BY Revenue DESC LIMIT 3",
+      "gold_sql": "SELECT g.Name, ROUND(SUM(ii.UnitPrice * ii.Quantity), 2) FROM genres g JOIN tracks t ON t.GenreId = g.GenreId JOIN invoice_items ii ON ii.TrackId = t.TrackId GROUP BY g.GenreId, g.Name ORDER BY SUM(ii.UnitPrice * ii.Quantity) DESC LIMIT 3",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 13,
+      "question": "How many tracks are longer than the average track?",
+      "agent_sql": "SELECT COUNT(*) FROM tracks WHERE Milliseconds > (SELECT AVG(Milliseconds) FROM tracks) LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM tracks WHERE Milliseconds > (SELECT AVG(Milliseconds) FROM tracks)",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 14,
+      "question": "How many customers have bought tracks from at least 5 different genres?",
+      "agent_sql": "SELECT COUNT(*) FROM (SELECT c.CustomerId FROM customers AS c JOIN invoices AS i ON c.CustomerId = i.CustomerId JOIN invoice_items AS ii ON i.InvoiceId = ii.InvoiceId JOIN tracks AS t ON ii.TrackId = t.TrackId WHERE NOT t.GenreId IS NULL GROUP BY c.CustomerId HAVING COUNT(DISTINCT t.GenreId) >= 5) LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM (SELECT i.CustomerId FROM invoices i JOIN invoice_items ii ON ii.InvoiceId = i.InvoiceId JOIN tracks t ON t.TrackId = ii.TrackId GROUP BY i.CustomerId HAVING COUNT(DISTINCT t.GenreId) >= 5)",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 15,
+      "question": "Which support employee's customers spent the most in total? Return the employee's first and last name only.",
+      "agent_sql": "SELECT e.FirstName, e.LastName FROM employees AS e JOIN customers AS c ON e.EmployeeId = c.SupportRepId JOIN invoices AS i ON c.CustomerId = i.CustomerId GROUP BY e.EmployeeId ORDER BY SUM(i.Total) DESC LIMIT 1",
+      "gold_sql": "SELECT e.FirstName, e.LastName FROM employees e JOIN customers c ON c.SupportRepId = e.EmployeeId JOIN invoices i ON i.CustomerId = c.CustomerId GROUP BY e.EmployeeId, e.FirstName, e.LastName ORDER BY SUM(i.Total) DESC LIMIT 1",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 16,
+      "question": "How many invoices have more than 5 line items?",
+      "agent_sql": "SELECT COUNT(*) FROM (SELECT InvoiceId FROM invoice_items GROUP BY InvoiceId HAVING COUNT(*) > 5) LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM (SELECT InvoiceId FROM invoice_items GROUP BY InvoiceId HAVING COUNT(*) > 5)",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 17,
+      "question": "What was the total of all invoices in 2012, rounded to 2 decimals?",
+      "agent_sql": "SELECT ROUND(SUM(Total), 2) FROM invoices WHERE STRFTIME('%Y', InvoiceDate) = '2012' LIMIT 100",
+      "gold_sql": "SELECT ROUND(SUM(Total), 2) FROM invoices WHERE strftime('%Y', InvoiceDate) = '2012'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 18,
+      "question": "How many customers use a Gmail address?",
+      "agent_sql": "SELECT COUNT(*) FROM customers WHERE Email LIKE '%@gmail.com' LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM customers WHERE Email LIKE '%@gmail.com'",
+      "correct": true,
+      "status": "ok"
+    },
+    {
+      "n": 19,
+      "question": "How many different artists have at least one track that was sold?",
+      "agent_sql": "SELECT COUNT(DISTINCT T2.ArtistId) FROM invoice_items AS T1 INNER JOIN tracks AS T2 ON T1.TrackId = T2.TrackId INNER JOIN albums AS T3 ON T2.AlbumId = T3.AlbumId INNER JOIN artists AS T4 ON T3.ArtistId = T4.ArtistId LIMIT 100",
+      "gold_sql": "SELECT COUNT(DISTINCT al.ArtistId) FROM invoice_items ii JOIN tracks t ON t.TrackId = ii.TrackId JOIN albums al ON al.AlbumId = t.AlbumId",
+      "correct": false,
+      "status": "error: no such column: T2.ArtistId"
+    },
+    {
+      "n": 20,
+      "question": "How many customers live in a country where the company also has an employee?",
+      "agent_sql": "SELECT COUNT(*) FROM customers WHERE Country IN (SELECT Country FROM employees) LIMIT 100",
+      "gold_sql": "SELECT COUNT(*) FROM customers WHERE Country IN (SELECT Country FROM employees)",
+      "correct": true,
+      "status": "ok"
+    }
+  ]
+}
